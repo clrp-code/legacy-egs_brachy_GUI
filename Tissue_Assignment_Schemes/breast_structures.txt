@@ -1,0 +1,9 @@
+Lung	LUNG_BLOODFILLED_WW86	3
+Heart HEART_BLOODFILLED_WW86 3
+Ribs RIBS 3
+chest_wall CHESTWALL 3
+Skin SKIN2_WW86 3
+Breast BREAST  3
+default_external EXTERNAL  3
+default_internal INTERNAL  3
+default EXTERNAL 3

@@ -1,0 +1,1 @@
+This folder holds the slice-by-slice media and density images produced by the GUI. 

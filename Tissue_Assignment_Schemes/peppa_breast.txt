@@ -1,0 +1,9 @@
+default_external AIR_0.0012 0.0275
+default_internal EXTERNAL_1.00 3
+default EXTERNAL_1.00 3
+Skin EXTERNAL_1.00 1.08
+Skin SKIN_1.09 3
+Heart HEART_1.05 3
+Lung LUNGS_0.26 3
+PTV PTV_1.02 3
+Ribs RIBS_1.92 3

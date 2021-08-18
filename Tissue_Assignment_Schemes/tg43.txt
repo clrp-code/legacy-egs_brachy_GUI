@@ -1,0 +1,3 @@
+default WATER_0.998 10
+default_external WATER_0.998 10
+default_internal WATER_0.998 10

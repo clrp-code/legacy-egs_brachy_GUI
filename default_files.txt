@@ -1,0 +1,12 @@
+/lib/media/material.dat
+/lib/muen/brachy_xcom_1.5MeV.muendat
+/lib/transport/low_energy_default
+/lib/transport/high_energy_default
+/lib/spectra/bareco60_line.spectrum
+/lib/spectra/Cs131_NNDC_2.6_line.spectrum
+/lib/spectra/Cs137_NNDC_2.6_line.spectrum
+/lib/spectra/I125_NCRP_line.spectrum
+/lib/spectra/Ir192_NNDC_2.6_line.spectrum
+/lib/spectra/Pd103_NNDC_2.6_line.spectrum
+/lib/spectra/Rh106_ICRU72_line.spectrum
+/lib/spectra/Yb169_NNDC_2.6_line.spectrum
