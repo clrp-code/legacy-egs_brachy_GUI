@@ -1024,7 +1024,7 @@ void Interface::createLayout() {
     QString EGS_BRACHY_SOURCE_FOLDER = "$EGS_HOME/egs_brachy/lib/geometry/sources";
     source_folder_path = getPath(EGS_BRACHY_SOURCE_FOLDER);
 
-    working_path = QDir::currentPath();
+    working_path = QCoreApplication::applicationDirPath();
     density = working_path + "/default_CT_calib.hu2rho"; //HU to density file
 
     setup_default_files();
