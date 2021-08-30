@@ -2613,7 +2613,6 @@ void DICOM::extract(QVector<QString> tempS2) {
         // ---------------------------------------------------------- //
         // FETCH RS FILE STRUCTURE DATA                               //
         // ---------------------------------------------------------- //
-		std::cout << "Martin: We are loading struct\n"; std::cout.flush();
         if (loadedstruct) {
             // Data for parsing singly and doubly nested SQ sets and point data strings
             QVector <Attribute *> *att, *att2;
@@ -2860,9 +2859,6 @@ void DICOM::extract(QVector<QString> tempS2) {
             QVector <QVector <QVector <double> > > etrm(structName.size(), contour);
             extrema = etrm;
 			
-			
-			std::cout << "Martin: extrema analysis for " << structName.size() << " structs\n"; std::cout.flush();
-
 
             for (int i=0; i<structZ.size(); i++) {
                 double xmin = contourPoints[i][0].x, xmax = contourPoints[i][0].x;
@@ -2903,7 +2899,6 @@ void DICOM::extract(QVector<QString> tempS2) {
 
 
         }
-		std::cout << "Martin: struct loaded\n"; std::cout.flush();
 
         // ---------------------------------------------------------- //
         // FETCH RP FILE PLAN DATA                                   //
