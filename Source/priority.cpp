@@ -150,7 +150,7 @@ void priority::createLayout() {
 
     //groupBox->setLayout(tissLayout);
     QLabel *title = new QLabel(tr("Verify the priority of each contour in the DICOM data.\n") +
-                               tr("Contours are ordered from hightest to lowest prioirty\n"));
+                               tr("Contours are ordered from highest to lowest priority\n"));
     apply = new QPushButton(tr("Save the priority order"));
     cancel = new QPushButton(tr("Cancel"));
     int pos = Names.size() +2;
