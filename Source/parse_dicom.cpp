@@ -964,7 +964,6 @@ Interface::~Interface() {
     delete ioLayout;
     delete ioFrame;
 
-
     // delete typeBrst;
     // delete typeEye;
     // delete typePep;
@@ -985,12 +984,8 @@ Interface::~Interface() {
     delete outLayout;
     delete outFrame;
 
-
-    delete col_1;
-    delete col_2;
     delete mainLayout;
-
-
+	
     delete remainder;
 
     delete progress;
@@ -1098,11 +1093,11 @@ void Interface::createLayout() {
     QPixmap image(working_path + "/egs_BRACHY_gui.jpg");
     QLabel *imageLabel = new QLabel();
     imageLabel->setPixmap(image);
-
+	imageLabel->setAlignment(Qt::AlignCenter);
 
     ioLayout = new QGridLayout();
-    ioLayout->addWidget(DICOMButton, 1, 0, 1, 2);
-    ioLayout->addWidget(CalibButton, 2, 0, 1, 2);
+    ioLayout->addWidget(DICOMButton, 0, 0, 1, 1);
+    ioLayout->addWidget(CalibButton, 1, 0, 1, 1);
     ioFrame = new QGroupBox(tr("Inputs"));
     ioFrame->setLayout(ioLayout);
 
@@ -1141,7 +1136,7 @@ void Interface::createLayout() {
                                           tr("of the egs_brachy input files. The user \n") +
                                           tr("can enter a header for the egsinp file."));
 
-    trim_button = new QPushButton(tr("Change the egsphant boundaries or inscribe geometries"));
+    trim_button = new QPushButton(tr("Change egsphant boundaries or add geometries"));
     trim_button->setToolTip(tr("This button allows the user to change the egsphant boundaries, inscribe\n") +
                             tr("geometries withing the egsphant or inscribe a geometry outside the phant.\n")+
                             tr("Button is enabled after DICOM files have been parsed."));
@@ -1150,7 +1145,7 @@ void Interface::createLayout() {
     optionsLayout->addWidget(options_button, 0,0,1,1);
     optionsLayout->addWidget(save_file_location_button,1,0,1,1);
     optionsLayout->addWidget(trim_button,2,0,1,1);
-    optionsFrame = new QGroupBox();
+    optionsFrame = new QGroupBox(tr("Simulation parameters"));
     optionsFrame->setLayout(optionsLayout);
 
 
@@ -1159,7 +1154,7 @@ void Interface::createLayout() {
     PreviewButton = new QPushButton(tr("Preview the Phantom"));
     run = new QPushButton(tr("Create input files"));
 
-    close = new QPushButton(tr("			Close			"));
+    close = new QPushButton(tr("Close"));
     close->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);       //Want to be half the width
 
     PreviewButton->setToolTip(tr("Button is enabled after phantom has been\n") +
@@ -1170,7 +1165,7 @@ void Interface::createLayout() {
                              tr("created by selecting the \'Create Input Files\'\n") +
                              tr("button"));
 
-    run ->setToolTip(tr("Button is enabled once DICOM files are parsed"));
+    run->setToolTip(tr("Button is enabled once DICOM files are parsed"));
 
     launchButton->setEnabled(0);
     trim_button->setEnabled(0);
@@ -1178,42 +1173,24 @@ void Interface::createLayout() {
     run->setEnabled(0);
 
     outLayout = new QGridLayout();
-    outLayout->addWidget(PreviewButton,0, 1, 1, 1); //want to make span multiple columns
+    outLayout->addWidget(PreviewButton, 1, 0, 1, 1); //want to make span multiple columns
     outLayout->addWidget(run, 0, 0, 1, 1);
-    outLayout->addWidget(launchButton, 1,0,2,2);
+    outLayout->addWidget(launchButton, 2, 0, 1, 1);
 
-
-    outFrame = new QGroupBox();
+    outFrame = new QGroupBox(tr("Execution"));
     outFrame->setLayout(outLayout);
 
     //------------------------------------------------
     //Creating the main tab window, adding all frames
     //------------------------------------------------
-    QLabel *note = new QLabel(tr(""));
-
-    //Column 1 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    col_1 = new QVBoxLayout();
-    col_1->addWidget(imageLabel,0);
-    col_1-> addWidget(ioFrame, 1);
-    col_1 -> addWidget(grid, 2);
-
-    //Column 2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    col_2 = new QVBoxLayout();
-    col_2->addWidget(outFrame);
     mainLayout = new QGridLayout();
 
-    mainLayout->addLayout(col_1, 0, 0, 1, 1);
-    mainLayout->addWidget(optionsFrame, 1, 0, 1, 1);
-    mainLayout->addLayout(col_2, 1, 1, 1, 1);
-
-
-    for (int i=2; i<16; i++) {
-        mainLayout->addWidget(note, i, 0, 1, 1);        //to add blank spaces
-        mainLayout->addWidget(note, i, 1, 1, 1);
-    }
-
-    mainLayout->setColumnStretch(0, 2);
-    mainLayout->setColumnStretch(1, 2);
+    mainLayout->addWidget(imageLabel, 0, 0, 1, 3);
+    mainLayout->addWidget(ioFrame, 1, 0, 1, 1);
+    mainLayout->addWidget(optionsFrame, 1, 1, 1, 1);
+    mainLayout->addWidget(outFrame, 1, 2, 1, 1);
+    mainLayout->addWidget(grid, 2, 0, 1, 3);
+	mainLayout->setRowStretch(2,2);
 
     QWidget *mainPage = new QWidget();
     mainPage->setLayout(mainLayout);
@@ -1265,14 +1242,6 @@ void Interface::createLayout() {
     sbox6->addWidget(select_transport,1,0,1,2);
     transportBox->setLayout(sbox6);
 
-
-    QGridLayout *phantcol_1 = new QGridLayout();
-    phantcol_1->addWidget(phantBox,0,0);
-    phantcol_1->addWidget(seedBox,1,0);
-    phantcol_1->addWidget(transportBox,2,0);
-    phantcol_1->addWidget(note,3,0);
-    phantcol_1->addWidget(note,4,0);
-
     //Column 2: EGSINP PARAMETERS
     //---------------------------
     //selecting the run mode
@@ -1298,7 +1267,7 @@ void Interface::createLayout() {
     energyDepos->setLayout(sbox4);
 
     //number of histories
-    numbHist = new QGroupBox();
+    numbHist = new QGroupBox(tr("Run parameters"));
     QGroupBox *number_histories_box = new QGroupBox(tr("Change the default number of histories"));
     numb_histories = new QLineEdit();
     numb_histories->setText("1e8");
@@ -1343,30 +1312,32 @@ void Interface::createLayout() {
     numbHist->setLayout(sbox5);
     //numbHist->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    QLabel *blank = new QLabel(" ");
-
     QGridLayout *phantpageLayout = new QGridLayout();
 
-    phantpageLayout->addWidget(phantBox, 0, 0, 1, 2);
-    phantpageLayout->addWidget(seedBox, 1, 0, 1, 2);
-    phantpageLayout->addWidget(transportBox, 2, 0, 1, 2);
-    phantpageLayout->addWidget(runMode, 0, 2, 1, 1);
-    phantpageLayout->addWidget(energyDepos, 1, 2, 1, 1);
-    phantpageLayout->addWidget(numbHist, 2, 2, 1, 1);
-    phantpageLayout->addWidget(change_muen, 3, 2, 1, 1);
-    phantpageLayout->addWidget(change_material_file, 4, 2, 1, 1);
-    phantpageLayout->addWidget(save_file_location_phantom, 5, 2, 1, 1);
-    phantpageLayout->addWidget(blank, 6, 1, 1, 1);
-    phantpageLayout->addWidget(launch_phantom, 7, 2, 1, 1);
+    phantpageLayout->addWidget(phantBox, 0, 0, 1, 1);
+    phantpageLayout->addWidget(seedBox, 0, 1, 1, 1);
+    phantpageLayout->addWidget(transportBox, 0, 2, 1, 1);
+	
+    phantpageLayout->addWidget(runMode, 1, 0, 2, 1);
+    phantpageLayout->addWidget(energyDepos, 3, 0, 1, 1);
+	
+    phantpageLayout->addWidget(numbHist, 1, 1, 3, 1);
+	
+	QVBoxLayout *buttonList = new QVBoxLayout();
+	
+    buttonList->addWidget(change_muen);
+    buttonList->addWidget(change_material_file);
+    buttonList->addWidget(save_file_location_phantom);
+    buttonList->addStretch();
+    buttonList->addWidget(launch_phantom);
+    phantpageLayout->addLayout(buttonList, 1, 2, 3, 1);
 
-    phantpageLayout->setColumnStretch(0, 2);
-    phantpageLayout->setColumnStretch(1, 1);
-
+	phantpageLayout->setRowStretch(0,2);
     phantPage->setLayout(phantpageLayout);
 
 
     //------------------------------------
-    //Creating the additonal functions tab
+    //Creating the additional functions tab
     //------------------------------------
     QWidget *additionalPage = new QWidget();
 
@@ -1476,27 +1447,20 @@ void Interface::createLayout() {
     fromdicomLayout->addWidget(tas_grid, 3, 0, 4, 1);
     fromdicomLayout->addWidget(phantBox_inputfiles, 3,1,1,2);
     fromdicomLayout->addWidget(seedBox_inputfiles, 4,1,1,2);
-    fromdicomLayout->addWidget(note, 5, 0,1,1);
-    fromdicomLayout->addWidget(note, 4, 1,1,1);
     fromdicomLayout->addWidget(create_input_files_button, 5, 1, 1, 1);
     fromdicom = new QGroupBox(tr("Create egs_brachy input file(s) from DICOM data"));
     fromdicom->setLayout(fromdicomLayout);
 
     from3ddoseLayout = new QGridLayout();
     from3ddoseLayout->addWidget(three_ddose_to_dose, 1, 0, 1, 1);
-    from3ddoseLayout->addWidget(note, 0, 1, 1, 1);
     from3ddoseLayout->addWidget(create_dose_to_3ddose, 2, 0, 1, 1);
-    from3ddoseLayout->addWidget(note, 0, 2, 1, 1);
     //from3ddoseLayout->addWidget(compare_3ddose, 3, 0, 1, 1);
     from3ddose = new QGroupBox(tr("Convert dose files"));
     from3ddose->setLayout(from3ddoseLayout);
 
     modularLayout = new QGridLayout();
-    modularLayout->addWidget(fromdicom,0, 0,1,1);
-    modularLayout->addWidget(from3ddose,1, 0,1,1);
-    for (int i=2; i<14; i++) {
-        modularLayout->addWidget(note,i, 0,1,2);    //to add blank spaces
-    }
+    modularLayout->addWidget(fromdicom,0,0,1,3);
+    modularLayout->addWidget(from3ddose,1,0,1,1);
 
     additionalPage->setLayout(modularLayout);
 
@@ -1507,30 +1471,22 @@ void Interface::createLayout() {
 
     widget_tabs->addTab(mainPage, tr("Using DICOM Data"));
     widget_tabs->addTab(phantPage, tr("Using the egs_brachy Library"));
-    widget_tabs->addTab(additionalPage, tr("Extra Options"));
-
-
-    // Assigning the tab widget to the window
-    QGridLayout *Layout1 = new QGridLayout;
-    Layout1->addWidget(widget_tabs);
-    Layout1->addWidget(close,1,0,1,1, Qt::AlignRight);
-
-    QWidget *window = new QWidget();
-    window->setLayout(Layout1);
-    window->setWindowTitle(tr(""));
-
-    QScrollArea *scrollArea = new QScrollArea();
-    scrollArea->setWidget(window);
-    scrollArea->viewport()->setAutoFillBackground(true);
-    scrollArea->setWindowTitle(QObject::tr(""));
-    scrollArea->show();
-    scrollArea->resize(700, 700);
+    widget_tabs->addTab(additionalPage, tr("Extra options"));
+	
+    //QScrollArea *scrollArea = new QScrollArea();
+    //scrollArea->setWidget(widget_tabs);
+    //scrollArea->viewport()->setAutoFillBackground(true);
+    //scrollArea->setWindowTitle(QObject::tr(""));
+    //scrollArea->show();
 
     QGridLayout *Layout = new QGridLayout;
-    Layout->addWidget(scrollArea);
+    Layout->addWidget(widget_tabs,0,0,1,1);
+    Layout->addWidget(close,1,0,1,1, Qt::AlignRight);
+	Layout->setRowStretch(0,5);
     setLayout(Layout);
-    resize(900,600);        //resizing the main window
-    setWindowTitle(tr("egs_brachy GUI"));
+    resize(minimumSize());
+    //resize(1280,720);        //resizing the main window
+    setWindowTitle(tr("egs_brachy_GUI"));
 
 
 // Progress Bar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
