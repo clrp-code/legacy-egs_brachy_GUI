@@ -157,7 +157,7 @@ void egsinp::create_egsinp(QString element, QString seed_found, double DSF, QStr
 
     QString muen_file;
     if (!user_muen_file.isEmpty()) { //User has selected the file
-        muen_file = egs_home + "/lib/muen/" + user_muen_file;
+        muen_file = user_muen_file;
     }
     else {
         muen_file = egs_home + muen_file_substring;
