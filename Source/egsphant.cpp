@@ -376,9 +376,6 @@ void EGSPhant::loadEGSPhantFilePhntom(QString path) {
 void EGSPhant::saveEGSPhantDensityFile(QString path) {
     QFile file(path);
 
-    // Increment size of the status bar
-    double increment;
-
     // Open up the file specified at path
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream output(&file);
@@ -392,7 +389,7 @@ void EGSPhant::saveEGSPhantDensityFile(QString path) {
                 }
                 output << "\n";
             }
-            emit progressMade(increment/100.0*90.0); // Update progress bar
+            emit progressMade(MAX_PROGRESS/100.0*90.0); // Update progress bar
             output << "\n";
         }
 

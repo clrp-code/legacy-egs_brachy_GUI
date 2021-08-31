@@ -2156,7 +2156,7 @@ void Interface::setup_default_files() {
     default_files = new QFile(working_path + "/default_files.txt");
 
     if (!default_files->open(QIODevice::ReadOnly | QIODevice::Text)) {
-        std::cout<<"Unable to open the default_files.txt which provides the location of the default egsinp files" <<endl;
+        std::cout<<"Unable to open the default_files.txt which provides the location of the default egsinp files" <<std::endl;
     }
     else {
         input = new QTextStream(default_files);
@@ -2179,7 +2179,7 @@ bool Interface::checkDefaultFile(QString filepath) {
 
     //Check the file can be opened
     if (!default_files->open(QIODevice::ReadOnly | QIODevice::Text)) {
-        std::cout<<"Unable to open " <<filepath.toStdString() <<" which provides the location of the default egsinp files" <<endl;
+        std::cout<<"Unable to open " <<filepath.toStdString() <<" which provides the location of the default egsinp files" <<std::endl;
         QMessageBox msgBox;
         msgBox.setText(tr("default_files.txt could not be found in the working directory. Please select the location of the default_files (.txt) file. \nThe user guide contains a description of its contents."));
         msgBox.setWindowTitle(tr("egs_brachy GUI"));
@@ -2196,7 +2196,7 @@ bool Interface::checkDefaultFile(QString filepath) {
         numlines++;
     }
     if (numlines < 5) {
-        std::cout<<"The default file " <<filepath.toStdString() <<" does not comply to specificions. Please consult the uder manual for a description of its contsnts and select a valid file. " <<endl;
+        std::cout<<"The default file " <<filepath.toStdString() <<" does not comply to specificions. Please consult the uder manual for a description of its contsnts and select a valid file. " <<std::endl;
         QMessageBox msgBox;
         msgBox.setText(tr("The contents of default_file does not comply to specifications. Please consult the user guide for a description of its contents."));
         msgBox.setWindowTitle(tr("egs_brachy GUI"));
@@ -2387,8 +2387,8 @@ void DICOM::extract(QVector<QString> tempS2) {
     database dat;
     QVector <DICOM *> dicom;
     QVector <DICOM *> dicomExtra;
-    DICOM *dicomPlan;
-    DICOM *dicomStruct;
+    DICOM *dicomPlan = NULL;
+    DICOM *dicomStruct = NULL;
 
     for (int i = 0; i < tempS2.size(); i++) {
         QString path(tempS2[i]);
@@ -2908,7 +2908,7 @@ void DICOM::extract(QVector<QString> tempS2) {
             QVector <Attribute *> *att, *att2;
             QByteArray tempData, tempData2;
             double half_life = 0;
-            double t_end = 0;
+            //double t_end = 0; // Unused
             double max_time = 0;
 
 
@@ -3129,11 +3129,11 @@ void DICOM::extract(QVector<QString> tempS2) {
 
                                         }
                                     }
+									for (int n = 0; n < att2->size(); n++) {
+										delete att2->at(n);
+									}
+									delete att2;
                                 }
-                                for (int n = 0; n < att2->size(); n++) {
-                                    delete att2->at(n);
-                                }
-                                delete att2;
                             }
                         }
                     }
@@ -4774,7 +4774,7 @@ bool Interface::get_seed_from_user() {
 // Creates file dialog for user to select the air kerma per hist file
 bool Interface::select_air_kerma(QString seed) {
 
-    bool got_air_kerma;
+    bool got_air_kerma = false;
     bool ok_airkerma;
     this->setDisabled(true);
 
@@ -5718,7 +5718,7 @@ void Interface::setup_input_files() {
         msgBox.setText(tr("Would you like to create an egsinp file?"));
         msgBox.setInformativeText(tr("Please select a phantom from the list or upload a DICOM directory containing CT files"));
         QAbstractButton *noEgsinpButton = msgBox.addButton(tr("Continue without creating an egsinp file"), QMessageBox::AcceptRole);
-        QAbstractButton *selectPhantButton = msgBox.addButton(tr("Cancel and select a phantom"), QMessageBox::RejectRole);
+        //QAbstractButton *selectPhantButton = msgBox.addButton(tr("Cancel and select a phantom"), QMessageBox::RejectRole); // unused
         msgBox.setDefaultButton(QMessageBox::Save);
         msgBox.exec();
 
@@ -5736,7 +5736,7 @@ void Interface::setup_input_files() {
         msgBox.setText(tr("Would you like to create an egsinp file?"));
         msgBox.setInformativeText(tr("Please select a seed transformation file from the list or upload a DICOM directory containing a Plan file"));
         QAbstractButton *noEgsinpButton = msgBox.addButton(tr("Continue without creating an egsinp file"), QMessageBox::AcceptRole);
-        QAbstractButton *selectPhantButton = msgBox.addButton(tr("Cancel and select a transformation file"), QMessageBox::RejectRole);
+        //QAbstractButton *selectPhantButton = msgBox.addButton(tr("Cancel and select a transformation file"), QMessageBox::RejectRole); // unused
         msgBox.setDefaultButton(QMessageBox::Save);
         msgBox.exec();
 
@@ -6023,8 +6023,8 @@ void Interface::ATcreate_egsphant() {
         // Arrays that hold the struct numbers and center voxel values to be used
         QList<QPoint> zIndex, yIndex, zExtIndex, yExtIndex;
         QList<QPoint>::iterator p;
-        double zMid, yMid, xMid;
-        int tempHU = 0, n = 0, q = 0, inStruct = 0, prio = 0;
+        // double zMid, yMid, xMid; // unused
+        int tempHU = 0, n = 0, q = 0; // , inStruct = 0, prio = 0; // unused
 
         // Convert HU to density and media without masks
         for (int k = 0; k < phant.nz; k++) { // Z //
@@ -6730,15 +6730,15 @@ void DICOM::create_3ddose(QString file_path, QString path_3ddose) {
     //updateProgress(increment);
 
     QVector <double> imagePos;
-    int numFrames;
+    // int numFrames; // unused
     unsigned short int xPix;
     unsigned short int yPix;
     QVector <double> xySpacing;
-    int bits;
+    int bits = 0;
     double doseScaling = 1;
     QVector <double> frame_offset;
     QVector <double> DOSE;
-    int rescaleFlag = 0;
+    // int rescaleFlag = 0; // unused
     QVector<double> xbounds;
     QVector<double> ybounds;
     QVector<double> zbounds;
@@ -6784,15 +6784,15 @@ void DICOM::create_3ddose(QString file_path, QString path_3ddose) {
                 imagePos[2] = (temp.split('\\',QString::SkipEmptyParts)[2]).toDouble();
 
             }
-            else if (dicomDose->data[j]->tag[0] == 0x0028 && dicomDose->data[j]->tag[1] == 0x0008) {   //Number of Frames
-
-                QString temp = "";
-                for (unsigned int s = 0; s < dicomDose->data[j]->vl; s++) {
-                    temp.append(dicomDose->data[j]->vf[s]);
-                }
-                numFrames = temp.toInt();
-
-            }
+            //else if (dicomDose->data[j]->tag[0] == 0x0028 && dicomDose->data[j]->tag[1] == 0x0008) {   //Number of Frames // unused
+			//                                                                                                              // unused
+            //    QString temp = "";                                                                                        // unused
+            //    for (unsigned int s = 0; s < dicomDose->data[j]->vl; s++) {                                               // unused
+            //        temp.append(dicomDose->data[j]->vf[s]);                                                               // unused
+            //    }                                                                                                         // unused
+            //    numFrames = temp.toInt();                                                                                 // unused
+			//                                                                                                              // unused
+            //}                                                                                                             // unused
             else if (dicomDose->data[j]->tag[0] == 0x0028 && dicomDose->data[j]->tag[1] == 0x0010) {   //Number of Rows
 
                 if (dicomDose->isBigEndian)

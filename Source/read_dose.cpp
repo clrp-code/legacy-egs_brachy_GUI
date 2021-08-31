@@ -296,7 +296,7 @@ void read_dose::create_dicom_dose(QMap<QString,QString> dicomHeaderData, QString
     file_out.open(path.toStdString(), std::ios::out | std::ios::binary);
 
     if (!file_out.is_open()) {
-        std::cout << "DICOM Dose file could not be created " <<path.toStdString() << endl;
+        std::cout << "DICOM Dose file could not be created " <<path.toStdString() << std::endl;
         return;
     }
 

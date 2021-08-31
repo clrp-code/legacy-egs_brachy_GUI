@@ -1368,27 +1368,32 @@ void trim::changed_contour(int index) {
 
 
 void trim::changed_zmin_slider(int val) {
+	(void)val; // Remove unused parameter warning
     zMin->setText(QString::number(z[zSlider->minimumPosition()]));
 }
 
 void trim::changed_zmax_slider(int val) {
+	(void)val; // Remove unused parameter warning
     zMax->setText(QString::number(z[zSlider->maximumPosition()]));
 }
 
-
 void trim::changed_xmin_slider(int val) {
+	(void)val; // Remove unused parameter warning
     xMin->setText(QString::number(x[xSlider->minimumPosition()]));
 }
 
 void trim::changed_xmax_slider(int val) {
+	(void)val; // Remove unused parameter warning
     xMax->setText(QString::number(x[xSlider->maximumPosition()]));
 }
 
 void trim::changed_ymin_slider(int val) {
+	(void)val; // Remove unused parameter warning
     yMin->setText(QString::number(y[ySlider->minimumPosition()]));
 }
 
 void trim::changed_ymax_slider(int val) {
+	(void)val; // Remove unused parameter warning
     yMax->setText(QString::number(y[ySlider->maximumPosition()]));
 }
 
@@ -1558,6 +1563,7 @@ Process: This functions saves the parameters when the window is opened
          Parameters are used if cancel is pressed
 ***/
 void trim::save_options_on_startup(QString egsinp) {
+	(void)egsinp; // Remove unused parameter warning
     if (groupBoxP->isChecked()) {
         phantChecked = true;
     }
@@ -1618,6 +1624,7 @@ Process: This functions saves the parameters when the window is opened
          Parameters are used if cancel is pressed
 ***/
 void trim::save_options_on_startupMid(QString egsinp) {
+	(void)egsinp; // Remove unused parameter warning
     if (groupBoxP->isChecked()) {
         phantChecked = true;
     }
